@@ -1,18 +1,17 @@
 (function (global, factory) {
   if (typeof define === 'function' && define.amd) {
-    define('Imgix', ['exports', 'md5', 'js-base64', 'crc'], factory);
+    define('Imgix', ['exports', 'md5', 'js-base64'], factory);
   } else if (typeof exports !== 'undefined') {
-    module.exports = factory(exports, require('md5'), require('js-base64').Base64, require('js-crc'));
+    module.exports = factory(exports, require('md5'), require('js-base64').Base64);
   } else {
     var mod = {
       exports: {}
     };
-    global.ImgixClient = factory(mod.exports, global.md5, global.Base64, global.crc32);
+    global.ImgixClient = factory(mod.exports, global.md5, global.Base64);
   }
-})(this, function (exports, _md5, _jsBase64, _crc32) {
+})(this, function (exports, _md5, _jsBase64) {
   var md5 = _md5;
-  var Base64 = _jsBase64.Base64 || _jsBase64;
-  var crc32 = _crc32;
+  var Base64 = _jsBase64.Base64 || _jsBase64;  
 
   var VERSION = '1.2.0';
   var SHARD_STRATEGY_CRC = 'crc';
@@ -91,7 +90,7 @@
         return domain;
       }
       else if (this.settings.shard_strategy === SHARD_STRATEGY_CRC) {
-        return this.settings.domains[crc32(path) % this.settings.domains.length];
+        return this.settings.domains[0];
       }
     }
 
